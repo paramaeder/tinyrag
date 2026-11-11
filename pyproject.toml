@@ -1,0 +1,39 @@
+[project]
+name = "tinyrag"
+version = "0.1.0"
+description = "A tiny RAG system: PDF upload, structure-based chunking, Qdrant and Ollama."
+readme = "README.md"
+authors = [
+    { name = "paramaeder", email = "103583417+paramaeder@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.162.4",
+    "httpx>=0.28.1",
+    "pydantic-settings>=2.16.2",
+    "pymupdf>=2.1",
+    "python-multipart>=0.0.33",
+    "qdrant-client>=1.20.0",
+    "uvicorn>=0.54.0",
+]
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.4",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+# E/F: pycodestyle + pyflakes basics, I: import sorting, B: bugbear (likely bugs),
+# UP: modern Python syntax, SIM: simplifications
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
