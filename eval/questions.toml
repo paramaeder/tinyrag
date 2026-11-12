@@ -1,0 +1,95 @@
+# Evaluation questions for the sample PDF (scripts/make_sample_pdf.py).
+#
+# Fields:
+#   category      what makes the question hard
+#   question      what we ask
+#   expected      the correct answer, for humans reading the report
+#   sections      section numbers that contain the answer (empty = not in the document)
+#   must_contain  terms a correct answer has to contain (case- and dot-insensitive)
+#
+# None of these questions were used while developing the prompt (see README).
+
+[[question]]
+category = "Direkter Fakt"
+question = "Wie viele Urlaubstage habe ich im Jahr?"
+expected = "30 Tage, zusätzlich 24. und 31. Dezember frei"
+sections = ["2.2"]
+must_contain = ["30"]
+
+[[question]]
+category = "Direkter Fakt"
+question = "Wie lang muss ein Passwort mindestens sein?"
+expected = "14 Zeichen"
+sections = ["4.1"]
+must_contain = ["14"]
+
+[[question]]
+category = "Umformuliert"
+question = "Kann ich von zu Hause arbeiten, und kriege ich dafür Geld?"
+expected = "Ja, bis zu 3 Tage pro Woche; einmalig 600 Euro Ausstattungspauschale"
+sections = ["2.3"]
+must_contain = ["600"]
+
+[[question]]
+category = "Umformuliert"
+question = "Wen rufe ich an, wenn mein Rechner nicht geht?"
+expected = "IT-Support-Team „Leuchtturm“, Durchwahl 300"
+sections = ["5"]
+must_contain = ["300"]
+
+[[question]]
+category = "Umgangssprache"
+question = "Kann ich Resturlaub ins nächste Jahr schieben?"
+expected = "Ja, bis zu 15 Tage; muss bis 31. März genommen werden"
+sections = ["2.2"]
+must_contain = ["15", "31. März"]
+
+[[question]]
+category = "Detail/Ausnahme"
+question = "Darf ich als Mitarbeiter in der Fertigung mobil arbeiten?"
+expected = "Nein, die Fertigung ist von der Regelung ausgenommen"
+sections = ["2.3"]
+# Was "nein" in the first run - but the correct answer "... sind ausgenommen" was marked wrong.
+must_contain = ["ausgenommen"]
+
+[[question]]
+category = "Zeitbezug"
+question = "Wie schnell muss ich eine Phishing-Mail melden?"
+expected = "Innerhalb von einer Stunde an security@nordlicht-robotik.example"
+sections = ["4.3"]
+must_contain = ["Stunde"]
+
+[[question]]
+category = "Rechnen"
+question = "Wie viel Offshore-Zulage bekomme ich maximal für einen einzelnen Einsatz am Stück?"
+expected = "14 Tage × 85 Euro = 1.190 Euro"
+sections = ["3.2"]
+must_contain = ["1.190"]
+
+[[question]]
+category = "Zwei Abschnitte"
+question = "Über welches Portal rechne ich Reisekosten ab, und wann ist es wegen Wartung nicht erreichbar?"
+expected = "Kompass; am ersten Dienstag im Monat von 18 bis 22 Uhr"
+sections = ["3.3", "4.2"]
+must_contain = ["Kompass", "Dienstag"]
+
+[[question]]
+category = "Falsche Annahme"
+question = "Warum wurde die Außenstelle in Esbjerg 2019 eröffnet?"
+expected = "Korrektur: eröffnet 2021; ein Grund wird nicht genannt (Aufgabe: Wartung und Einsatzplanung)"
+sections = ["1.2"]
+must_contain = ["2021"]
+
+[[question]]
+category = "Keine Antwort"
+question = "Gibt es einen Zuschuss zum Mittagessen?"
+expected = "Steht nicht im Dokument"
+sections = []
+must_contain = []
+
+[[question]]
+category = "Keine Antwort (verlockend)"
+question = "Wie viele Tage Sonderurlaub bekomme ich zu meiner Hochzeit?"
+expected = "Steht nicht im Dokument (nur regulärer Urlaub ist geregelt)"
+sections = []
+must_contain = []
