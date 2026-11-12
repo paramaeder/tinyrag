@@ -3,6 +3,10 @@
 from dataclasses import dataclass
 
 
+class DocumentError(ValueError):
+    """A document that cannot be processed, e.g. not a PDF or without any text."""
+
+
 @dataclass(frozen=True)
 class Element:
     """A heading or paragraph of a document, in reading order.

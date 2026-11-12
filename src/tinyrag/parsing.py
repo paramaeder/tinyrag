@@ -17,7 +17,7 @@ from dataclasses import dataclass
 
 import pymupdf
 
-from tinyrag.models import Element
+from tinyrag.models import DocumentError, Element
 
 MARGIN_BAND = 50  # PDF points at top and bottom of a page considered header/footer
 MIN_HEADING_DELTA = 1.0  # a heading must be at least this much larger than body text
@@ -34,7 +34,11 @@ class TextBlock:
 
 def parse_pdf(data: bytes) -> list[Element]:
     """Parse PDF bytes into headings and paragraphs in reading order."""
-    with pymupdf.open(stream=data, filetype="pdf") as doc:
+    try:
+        doc = pymupdf.open(stream=data, filetype="pdf")
+    except pymupdf.FileDataError as error:
+        raise DocumentError("Die Datei ist kein gültiges PDF.") from error
+    with doc:
         blocks = [block for page in doc for block in extract_blocks(page)]
     return classify_blocks(blocks)
 

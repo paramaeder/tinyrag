@@ -1,6 +1,6 @@
-import pymupdf
+import pytest
 
-from tinyrag.models import Element
+from tinyrag.models import DocumentError, Element
 from tinyrag.parsing import TextBlock, classify_blocks, clean_text, join_lines, parse_pdf
 
 
@@ -49,19 +49,8 @@ def test_join_lines_keeps_hyphenated_words_together():
     )
 
 
-def _make_pdf() -> bytes:
-    doc = pymupdf.open()
-    for number in (1, 2):
-        page = doc.new_page()  # A4-ish, 842 points high
-        page.insert_text((72, 30), "Running header", fontsize=8)
-        page.insert_text((72, 100), f"Chapter {number}", fontsize=16)
-        page.insert_text((72, 140), f"Body text of chapter {number}, long enough.", fontsize=10)
-        page.insert_text((72, page.rect.height - 20), f"Page {number}", fontsize=8)
-    return doc.tobytes()
-
-
-def test_parse_pdf_extracts_structure_and_drops_header_and_footer():
-    elements = parse_pdf(_make_pdf())
+def test_parse_pdf_extracts_structure_and_drops_header_and_footer(pdf_bytes):
+    elements = parse_pdf(pdf_bytes)
 
     assert elements == [
         Element("Chapter 1", page=1, heading_level=1),
@@ -69,3 +58,12 @@ def test_parse_pdf_extracts_structure_and_drops_header_and_footer():
         Element("Chapter 2", page=2, heading_level=1),
         Element("Body text of chapter 2, long enough.", page=2),
     ]
+
+
+def test_parse_pdf_rejects_invalid_data():
+    with pytest.raises(DocumentError):
+        parse_pdf(b"this is not a pdf")
+
+
+def test_parse_pdf_without_text_returns_no_elements(empty_pdf_bytes):
+    assert parse_pdf(empty_pdf_bytes) == []
