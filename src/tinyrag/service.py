@@ -17,8 +17,10 @@ aus Dokumenten, die dir gegeben werden.
 Regeln:
 - Verwende nur Informationen aus den Auszügen, niemals dein Vorwissen.
 - Antworte knapp und präzise in der Sprache der Frage.
-- Gib am Ende die Nummern der verwendeten Auszüge an, z. B. [1] oder [2][3].
-- Enthalten die Auszüge die Antwort nicht, antworte nur mit: {NO_ANSWER}"""
+- Enthalten die Auszüge die Antwort, gib am Ende die Nummern der verwendeten
+  Auszüge an, z. B. [1] oder [2][3].
+- Enthalten die Auszüge die Antwort nicht, antworte ausschließlich mit diesem Satz,
+  ohne Quellenangabe: {NO_ANSWER}"""
 
 
 @dataclass(frozen=True)

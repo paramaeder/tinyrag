@@ -30,7 +30,7 @@ def get_service() -> RagService:
     return RagService(
         embedder=OllamaEmbedder(ollama, settings.embedding_model),
         store=VectorStore(QdrantClient(path=str(settings.qdrant_path)), settings.collection_name),
-        llm=OllamaLLM(ollama, settings.llm_model),
+        llm=OllamaLLM(ollama, settings.llm_model, settings.llm_context_tokens),
         top_k=settings.top_k,
     )
 

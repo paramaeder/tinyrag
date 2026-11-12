@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     ollama_url: str = "http://localhost:11434"
     embedding_model: str = "bge-m3"
     llm_model: str = "qwen2.5:14b"
+    llm_context_tokens: int = 8192
     qdrant_path: Path = Path("data/qdrant")
     collection_name: str = "documents"
     top_k: int = 5

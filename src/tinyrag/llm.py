@@ -14,9 +14,10 @@ class LLM(Protocol):
 class OllamaLLM:
     """LLM backed by an Ollama server's /api/chat endpoint."""
 
-    def __init__(self, client: httpx.Client, model: str) -> None:
+    def __init__(self, client: httpx.Client, model: str, context_tokens: int) -> None:
         self._client = client
         self._model = model
+        self._context_tokens = context_tokens
 
     def generate(self, system: str, prompt: str) -> str:
         response = self._client.post(
@@ -28,7 +29,11 @@ class OllamaLLM:
                     {"role": "user", "content": prompt},
                 ],
                 "stream": False,
-                "options": {"temperature": 0},  # deterministic: same question, same answer
+                "options": {
+                    "temperature": 0,  # deterministic: same question, same answer
+                    # Ollama silently cuts off the start of longer prompts - set it explicitly.
+                    "num_ctx": self._context_tokens,
+                },
             },
         )
         response.raise_for_status()
